@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/mainActivity">
+    <fragment
+        android:id="@+id/hilt_HomeFragment"
+        android:name="com.example.anamnesedrapp.usuario.ui.Hilt_HomeFragment"
+        android:label="Hilt_HomeFragment"  />
+    <navigation android:id="@+id/navigation2"
+        app:startDestination="@id/mainActivity">
+        <activity
+            android:id="@+id/mainActivity"
+            android:name="com.example.anamnesedrapp.MainActivity"
+            android:label="MainActivity" />
+        <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/hilt_HomeFragment" />
+    </navigation>
+    <fragment
+        android:id="@+id/hilt_RegisterFragment"
+        android:name="com.example.anamnesedrapp.usuario.ui.Hilt_RegisterFragment"
+        android:label="Hilt_RegisterFragment" />
+    <fragment
+        android:id="@+id/hilt_LoginFragment"
+        android:name="com.example.anamnesedrapp.usuario.ui.Hilt_LoginFragment"
+        android:label="Hilt_LoginFragment" />
+</navigation>
