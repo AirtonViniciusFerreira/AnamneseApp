@@ -3,8 +3,6 @@ package com.example.anamnesedrapp.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -23,13 +21,19 @@ private val DarkColorScheme = darkColorScheme(
 //    tertiary = Pink80,
 //    surface = Light_blue_600,
     primary = APP_Primary_Blue_100,
+    onPrimary = APP_Primary_Blue_100_E,
+    primaryContainer = APP_Primary_Blue_100_B,
+    onPrimaryContainer = APP_Primary_Blue_100_A,
     secondary = APP_Secondary_Green_100,
-    tertiary = APP_Danger_Orange_100,
-    surface = APP_Secondary_Blue_100,
+    onSecondary = APP_Secondary_Green_100_A,
+    secondaryContainer = APP_Secondary_Green_100_B,
+    onSecondaryContainer = APP_Secondary_Green_100_D,
+    tertiary = APP_tertiary_Orange_100,
+    onTertiary = APP_Tertiary_Orange_100_B,
+    tertiaryContainer = APP_Tertiary_Orange_100_D,
+    onTertiaryContainer = APP_Tertiary_Orange_100_D,
+    surface = APP_Primary_Blue_100_D,
     background = Black,
-    onPrimary = Black,
-    onSecondary = White
-
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -37,12 +41,19 @@ private val LightColorScheme = lightColorScheme(
 //    secondary = Teal_200,
 //    tertiary = Pink40,
     primary = APP_Primary_Blue_100,
+    onPrimary = APP_Primary_Blue_100_E,
+    primaryContainer = APP_Primary_Blue_100_B,
+    onPrimaryContainer = APP_Primary_Blue_100_A,
     secondary = APP_Secondary_Green_100,
-    tertiary = APP_Danger_Orange_100,
-    surface = APP_Secondary_Blue_100,
+    onSecondary = APP_Secondary_Green_100_A,
+    secondaryContainer = APP_Secondary_Green_100_B,
+    onSecondaryContainer = APP_Secondary_Green_100_D,
+    tertiary = APP_tertiary_Orange_100,
+    onTertiary = APP_Tertiary_Orange_100_B,
+    tertiaryContainer = APP_Tertiary_Orange_100_D,
+    onTertiaryContainer = APP_Tertiary_Orange_100_D,
+    surface = APP_Primary_Blue_100_D,
     background = White,
-    onPrimary = White,
-    onSecondary = Black
 
 
     /* Other default colors to override
@@ -54,29 +65,6 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
-)
-
-
-val AppDarkColors = darkColors(
-    primary = APP_Primary_Blue_100,
-    primaryVariant = APP_Secondary_Green_100,
-    secondary = APP_Danger_Orange_100,
-    surface = APP_Secondary_Blue_100,
-    background = Black,
-    onPrimary = Black,
-    onSecondary = White
-    // M2 dark Color parameters
-)
-
-val AppLightColors = lightColors(
-    primary = APP_Primary_Blue_100,
-    primaryVariant = APP_Secondary_Green_100,
-    secondary = APP_Danger_Orange_100,
-    surface = APP_Secondary_Blue_100,
-    background = White,
-    onPrimary = White,
-    onSecondary = Black
-    // M2 light Color parameters
 )
 
 @Composable
@@ -94,11 +82,6 @@ fun AnamneseDrAppTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val appColors  = if (darkTheme) {
-        AppDarkColors
-    } else {
-        AppLightColors
-    }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -106,15 +89,9 @@ fun AnamneseDrAppTheme(
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }
-    androidx.compose.material.MaterialTheme(
-        colors = appColors,
-        typography = AppTypography,
-    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
             content = content
         )
-    }
-
 }

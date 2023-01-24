@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace 'com.example.anamnesedrapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.anamnesedrapp"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -73,9 +73,9 @@ dependencies {
 
     //region MATERIAL
 
-    implementation 'androidx.compose.material3:material3:1.0.0-alpha02'
+    implementation 'androidx.compose.material3:material3:1.1.0-alpha04'
 
-    implementation "androidx.compose.material:material:1.2.1"
+//    implementation "androidx.compose.material:material:1.2.1"
 
     //endregion
 

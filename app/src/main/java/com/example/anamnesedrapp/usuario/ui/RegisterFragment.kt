@@ -2,11 +2,7 @@ package com.example.anamnesedrapp.usuario.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import androidx.compose.ui.tooling.preview.Preview as Preview1
 
+@ExperimentalLayoutApi
+@ExperimentalMaterial3Api
 @AndroidEntryPoint
 class RegisterFragment @Inject constructor(
     val registerViewModel: RegisterViewModel

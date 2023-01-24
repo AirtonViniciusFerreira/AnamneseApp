@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -15,14 +16,13 @@ import com.example.anamnesedrapp.R
 @Composable
 fun TituloApp(
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 50.sp
+    color: Color = Color.Unspecified
 ) {
     Text(
         text = stringResource(id = R.string.app_name),
         modifier = modifier,
-//        fontSize = fontSize,
-//        fontFamily = FontFamily(Font(R.font.frscript)),
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.displayLarge,
+        color = color
     )
 }
 

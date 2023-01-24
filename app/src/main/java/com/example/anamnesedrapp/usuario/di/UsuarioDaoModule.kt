@@ -1,6 +1,8 @@
 package com.example.anamnesedrapp.usuario.di
 
 import android.content.Context
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavController
 import androidx.room.Room
 import com.example.anamnesedrapp.MainActivity
@@ -20,6 +22,8 @@ import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
+@ExperimentalLayoutApi
+@ExperimentalMaterial3Api
 @Module
 @InstallIn(SingletonComponent::class)
 class UsuarioDaoModule {
@@ -44,8 +48,8 @@ class UsuarioDaoModule {
         loginViewModel: LoginViewModel,
         mainViewModel: MainViewModel
     ): LoginFragment =
-//        LoginFragment(loginViewModel, mainViewModel)
-        LoginFragment()
+        LoginFragment(loginViewModel, mainViewModel)
+//        LoginFragment()
 
     @Provides
     fun  providesRegisterFragment(

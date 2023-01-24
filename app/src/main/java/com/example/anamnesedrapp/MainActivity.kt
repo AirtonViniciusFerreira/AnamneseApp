@@ -9,8 +9,8 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +32,8 @@ import com.example.anamnesedrapp.usuario.ui.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@ExperimentalLayoutApi
+@ExperimentalMaterial3Api
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -86,45 +88,36 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    private fun MainContent() {
-        Scaffold(
-            topBar = { TopbarApp(idTitle = R.string.home_titulo) },
-        ) {
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
     @Composable
     fun DefaultPreview() {
-        BaseTelaApp(
-            scaffoldModifier = Modifier
-                .fillMaxWidth(),
-            surfaceModifier = Modifier
-                .fillMaxWidth(),
-            surfaceColor = MaterialTheme.colorScheme.surface,
-            topbar = {
-                TopbarApp()
-            }
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .paint(
-                        painterResource(id = R.mipmap.ic_logo_foreground),
-                        alpha = 0.25f
-                    )
+            BaseTelaApp(
+                scaffoldModifier = Modifier
+                    .fillMaxWidth(),
+                surfaceModifier = Modifier
+                    .fillMaxWidth(),
+                surfaceColor = MaterialTheme.colorScheme.surface,
+                topbar = {
+                    TopbarApp()
+                }
             ) {
-                Text(text = "teste")
-                OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text(text = "teste") },
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .paint(
+                            painterResource(id = R.mipmap.ic_logo_foreground),
+                            alpha = 0.25f
+                        )
+                ) {
+                    Text(text = "teste")
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = {},
+                        label = { Text(text = "teste") },
+                    )
+                }
             }
-        }
     }
 }

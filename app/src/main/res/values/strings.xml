@@ -22,4 +22,10 @@
     <string name="login_titulo">Login</string>
     <string name="register_Titulo">Registrar-se</string>
     <string name="home_titulo">Início</string>
+    <string name="icon_visibility_descripton">Icone de Visulização de Campos</string>
+    <string name="consulta_titulo">Consulta</string>
+    <string name="historico_medico_titulo">Historico Médico</string>
+    <string name="pet_titulo">Pets</string>
+    <string name="tutor_titulo">Tutores</string>
+    <string name="medico_titulo">Medicos</string>
 </resources>
