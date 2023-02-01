@@ -9,5 +9,5 @@ interface UsuarioService {
 
     fun findUsuarioById(id: Long): UsuarioDTO
 
-    suspend fun getUsuarioLogin(nomeUsuario: String, senha: String): UsuarioDTO
+    suspend fun getUsuarioLogin(nomeUsuario: String, senha: String): Result<UsuarioDTO>
 }

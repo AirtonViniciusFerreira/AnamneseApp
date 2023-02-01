@@ -13,8 +13,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@RequiresApi(Build.VERSION_CODES.N)
+@Singleton
 class UsuarioServiceImpl @Inject constructor(
     private val usuarioRepository: UsuarioRepository
 ) : UsuarioService {
@@ -28,8 +29,8 @@ class UsuarioServiceImpl @Inject constructor(
         return usuarioRepository.findUsuarioById(id).toUsuarioDTO()
     }
 
-    override suspend fun getUsuarioLogin(nomeUsuario: String, senha: String): UsuarioDTO {
-        return usuarioRepository.getUsuarioLogin(nomeUsuario, senha).toUsuarioDTO()
+    override suspend fun getUsuarioLogin(nomeUsuario: String, senha: String): Result<UsuarioDTO> {
+        return usuarioRepository.getUsuarioLogin(nomeUsuario, senha).mapCatching { it.toUsuarioDTO() }
     }
 
     fun teste(nomeUsuario: String, senha: String) = runBlocking {

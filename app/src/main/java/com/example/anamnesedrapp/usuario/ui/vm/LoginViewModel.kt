@@ -1,10 +1,7 @@
 package com.example.anamnesedrapp.usuario.ui.vm
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.anamnesedrapp.MainViewModel
 import com.example.anamnesedrapp.R
 import com.example.anamnesedrapp.usuario.service.UsuarioService
@@ -12,6 +9,7 @@ import com.example.anamnesedrapp.usuario.service.dto.UsuarioDTO
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +18,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+public class LoginViewModel @Inject constructor(
     val usuarioService: UsuarioService
 ) : ViewModel() {
 
@@ -35,7 +33,8 @@ class LoginViewModel @Inject constructor(
 
 //    private val autenticacaoEstadoEvento = MutableLiveData<AutenticacaoEstado>()
 
-    private val autenticacaoEstadoMutable = MutableStateFlow<AutenticacaoEstado>(AutenticacaoEstado.NaoAutenticado)
+    private val autenticacaoEstadoMutable =
+        MutableStateFlow<AutenticacaoEstado>(AutenticacaoEstado.NaoAutenticado)
 
     val AutenticacaoEstadoMutable: StateFlow<AutenticacaoEstado>
         get() = autenticacaoEstadoMutable.asStateFlow()
@@ -59,27 +58,32 @@ class LoginViewModel @Inject constructor(
         if (!validarDados(nomeUsuario, senha)) {
             return
         }
-        lateinit var usuarioDTO: UsuarioDTO
-        lateinit var job: Job
-        try {
+        viewModelScope.launch {
+            try {
+                val usuarioDeferred = async { usuarioService.getUsuarioLogin(nomeUsuario, senha) }
 
+                usuarioDeferred.await()
+                    .fold(
+                        onSuccess =  {
+                            usuarioDTO = it
+                            autenticacaoEstadoMutable.value = AutenticacaoEstado.Autenticado
+                        },
+                        onFailure =  {
+                            val mensage = LOGIN_ERROS.first to (it.message ?: "")
+                            val camposInvalidos = arrayListOf<Pair<String, String>>()
+                            camposInvalidos.add(mensage)
+                            autenticacaoEstadoMutable.value =
+                                AutenticacaoEstado.AutenticacaoErro(camposInvalidos)
+                        }
+                    )
 
-            job = runBlocking {
-                launch {
-                    usuarioDTO = usuarioService.getUsuarioLogin(nomeUsuario, senha)
-                }
+            } catch (expetion: Exception) {
+                val mensage = LOGIN_ERROS.first to (expetion.message ?: "")
+                val camposInvalidos = arrayListOf<Pair<String, String>>()
+                camposInvalidos.add(mensage)
+                autenticacaoEstadoMutable.value =
+                    AutenticacaoEstado.AutenticacaoErro(camposInvalidos)
             }
-            if (job.isCompleted) {
-                this.usuarioDTO = usuarioDTO
-//                autenticacaoEstadoEvento.value = AutenticacaoEstado.Autenticado
-                autenticacaoEstadoMutable.value = AutenticacaoEstado.Autenticado
-            }
-        } catch (expetion: Exception) {
-            val mensage = "EXCECAO" to (expetion.message ?: "")
-            val camposInvalidos = arrayListOf<Pair<String, String>>()
-            camposInvalidos.add(mensage)
-//            autenticacaoEstadoEvento.value = AutenticacaoEstado.AutenticacaoErro(camposInvalidos)
-            autenticacaoEstadoMutable.value  = AutenticacaoEstado.AutenticacaoErro(camposInvalidos)
         }
 
     }
@@ -106,6 +110,7 @@ class LoginViewModel @Inject constructor(
     companion object {
         val INPUT_NOMEUSUARIO = "INPUT_NOMEUSUARIO" to R.string.login_campo_invalido_nomeusuario
         val INPUT_SENHA = "INPUT_SENHA" to R.string.login_campo_invalido_senha
+        val LOGIN_ERROS = "LOGIN_ERROS" to ""
     }
 
 }

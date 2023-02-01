@@ -22,6 +22,7 @@ import com.example.anamnesedrapp.MainViewModel
 import com.example.anamnesedrapp.R
 import com.example.anamnesedrapp.ui.util.BaseTelaApp
 import com.example.anamnesedrapp.ui.util.TituloApp
+import com.example.anamnesedrapp.ui.util.TituloFragment
 import com.example.anamnesedrapp.usuario.ui.vm.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -48,15 +49,10 @@ class RegisterFragment @Inject constructor(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TituloApp()
-                Titulo()
+                TituloFragment(idTitulo =  R.string.register_Titulo)
                 CreateForm()
             }
         }
-    }
-
-    @Composable
-    private fun Titulo() {
-        Text(text = stringResource(id = R.string.register_Titulo))
     }
 
     @Composable

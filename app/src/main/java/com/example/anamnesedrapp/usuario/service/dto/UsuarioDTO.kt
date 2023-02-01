@@ -1,7 +1,12 @@
 package com.example.anamnesedrapp.usuario.service.dto
 
+import java.util.Date
+
 data class UsuarioDTO (
-    val id: String,
-    val nomeUsuario: String,
-    val criadoPor: String
+    var id: String,
+    var nomeUsuario: String,
+    var criadoPor: String = "system",
+    var criadoData: Date,
+    var modificadoPor: String = "system",
+    var modificadoData: Date
 )

@@ -32,8 +32,7 @@ class AppDataBaseModule {
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-//        database.insert("usuario", 0, ContentValues())
-        database.execSQL("INSERT INTO usuario(nomeUsuario, senha, criadoPor) " +
-                "SELECT 'admin', 'admin23', 'system'")
+        database.execSQL("INSERT INTO usuario(nomeUsuario, senha, criadoPor, criadoData, modificadoPor, modificadoData) " +
+                "SELECT 'admin', 'admin23', 'system', 0, 'system', 0 ")
     }
 }

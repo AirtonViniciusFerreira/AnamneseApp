@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SQLAndroidSettings">
+    <option name="databases">
+      <map>
+        <entry key="DrApp_D:\Projetos\Android\AnamneseDrApp\AndroidSqlEditorDatabases\">
+          <value>
+            <list>
+              <option value="adb-N2AIB6000489B9P-aweGzR._adb-tls-connect._tcp" />
+              <option value="/databases/DrApp" />
+              <option value="DrApp" />
+              <option value="DrApp" />
+              <option value="false" />
+              <option value="com.example.anamnesedrapp" />
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="environments">
+      <map>
+        <entry key="Dev_D:\Projetos\Android\AnamneseDrApp\AndroidSqlEditorDatabases\">
+          <value>
+            <list>
+              <option value="Dev" />
+              <option value="D:\Projetos\Android\AnamneseDrApp\AndroidSqlEditorDatabases\" />
+              <option value="=+" />
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="storageVersion" value="2" />
   </component>
 </project>

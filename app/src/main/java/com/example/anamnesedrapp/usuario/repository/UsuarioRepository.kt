@@ -7,6 +7,6 @@ interface UsuarioRepository {
 
     fun findUsuarioById(id: Long): UsuarioEntity
 
-    fun getUsuarioLogin(nomeUsuario: String, senha: String): UsuarioEntity
+    suspend fun getUsuarioLogin(nomeUsuario: String, senha: String): Result<UsuarioEntity>
 
 }

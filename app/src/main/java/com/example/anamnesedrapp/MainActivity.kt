@@ -7,31 +7,37 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navigation
+import com.example.anamnesedrapp.tutor.ui.TutorEdit
+import com.example.anamnesedrapp.tutor.ui.TutorList
+import com.example.anamnesedrapp.tutor.ui.vm.TutorViewModel
+import com.example.anamnesedrapp.ui.ConstrucaoAPP
 import com.example.anamnesedrapp.ui.theme.AnamneseDrAppTheme
 import com.example.anamnesedrapp.ui.util.BaseTelaApp
-import com.example.anamnesedrapp.usuario.ui.HomeFragment
 import com.example.anamnesedrapp.ui.util.TopbarApp
-import com.example.anamnesedrapp.usuario.ui.LoginFragment
-import com.example.anamnesedrapp.usuario.ui.RegisterFragment
+import com.example.anamnesedrapp.usuario.ui.*
+import com.example.anamnesedrapp.usuario.ui.vm.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
+@ExperimentalMaterialApi
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
@@ -39,12 +45,6 @@ class MainActivity : ComponentActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
     private val sTelaInicial = mutableStateOf("home")
-
-    @Inject
-    lateinit var loginFragment: LoginFragment
-
-    @Inject
-    lateinit var homeFragment: HomeFragment
 
     @Inject
     lateinit var registerFragment: RegisterFragment
@@ -71,6 +71,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun navegacao() {
         this.navHostController = rememberNavController()
+        val mainViewModel1 = hiltViewModel<MainViewModel>()
+        val tutorViewModel = hiltViewModel<TutorViewModel>()
 
         if (mainViewModel.bUsuarioAutenticado)
             sTelaInicial.value = "home"
@@ -81,9 +83,42 @@ class MainActivity : ComponentActivity() {
             navController = this.navHostController,
             startDestination = sTelaInicial.value,
             builder = {
-                composable("home") { homeFragment.onCreate(navHostController) }
-                composable("register") { registerFragment.onCreate(navHostController) }
-                composable("login") { loginFragment.onCreate(navHostController) }
+                composable("home") {
+                    HomeOnCreate(navHostController =  navHostController, mainViewModel1)
+                }
+//                navigation(startDestination = "usuario", route = "usuario") {
+                    composable("register") { registerFragment.onCreate(navHostController) }
+                    composable("login") {
+                        val loginViewModel = hiltViewModel<LoginViewModel>()
+                        LoginOnCreate(navHostController =  navHostController, loginVM =  loginViewModel, mainVM = mainViewModel1)
+                    }
+//                }
+                navigation(startDestination = "tutor/list", route = "tutor") {
+                    composable("tutor/list") {
+                        TutorList(navHostController = navHostController,
+                            tutorViewModel = tutorViewModel
+                        )
+                    }
+                    composable(
+                        route ="tutor/edit?tutorId={tutorId}",
+                        arguments = listOf(navArgument(name = "tutorId") {
+                            nullable = true
+                            type = NavType.StringType
+                            defaultValue = null
+                        })
+                    ) {backStackEntry ->
+                        TutorEdit(
+                            navHostController = navHostController,
+                            tutorViewModel = tutorViewModel,
+                            tutorId = backStackEntry.arguments?.getString("tutorId")
+                        )
+                    }
+                }
+
+
+                composable("em-construcao") {
+                    ConstrucaoAPP(navHostController = navHostController)
+                }
             }
         )
     }
@@ -102,22 +137,32 @@ class MainActivity : ComponentActivity() {
                     TopbarApp()
                 }
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .paint(
-                            painterResource(id = R.mipmap.ic_logo_foreground),
-                            alpha = 0.25f
-                        )
-                ) {
-                    Text(text = "teste")
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        label = { Text(text = "teste") },
-                    )
-                }
+
             }
     }
+}
+
+var LocalListMenus = staticCompositionLocalOf {
+    listOf(
+        Menu(
+            titulo = R.string.consulta_titulo,
+            icone = R.drawable.baseline_do_disturb_24
+        ),
+//            Menu(
+//                titulo = R.string.historico_medico_titulo,
+//            ),
+        Menu(
+            titulo =  R.string.pet_titulo,
+            icone = R.drawable.baseline_pets_24,
+        ),
+        Menu(
+            titulo = R.string.tutor_titulo,
+            urlNavegacao = "tutor/list",
+            icone = R.drawable.baseline_man_24
+        ),
+        Menu(
+            titulo = R.string.medico_titulo,
+            icone = R.drawable.baseline_medical_information_24
+        )
+    )
 }

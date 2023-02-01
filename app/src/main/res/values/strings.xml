@@ -28,4 +28,20 @@
     <string name="pet_titulo">Pets</string>
     <string name="tutor_titulo">Tutores</string>
     <string name="medico_titulo">Medicos</string>
+    <string name="pessoa_titulo">Dados Pessoais</string>
+    <string name="string_vazia" />
+    <string name="pessoa_label_nomeCompleto">Nome Completo</string>
+    <string name="pessoa_label_razaoSocial">Razão Social</string>
+    <string name="icon_cancel_description">Icone de Limpeza</string>
+    <string name="pessoa_label_apelido">Apelido</string>
+    <string name="pessoa_label_nomeFantasia">Nome Fantasia</string>
+    <string name="pessoa_label_cpfCnpj">Cpf / Cpnj</string>
+    <string name="pessoa_label_cpf">Cpf</string>
+    <string name="pessoa_label_cnpj">Cpnj</string>
+    <string name="icon_menu_description">Menu</string>
+    <string name="icon_add_description">Adicionar</string>
+    <string name="icon_edit_description">Editar</string>
+    <string name="icon_delete_description">deletar</string>
+    <string name="pessoa_label_tipoPessoa">Tipo pessoa</string>
+    <string name="icon_arrow__drop_down_description">Flecha para baixo</string>
 </resources>
